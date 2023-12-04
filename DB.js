@@ -1,7 +1,7 @@
-const {Client} = require('pg');
+const {Pool} = require('pg');
 const {replicationStart} = require('pg-protocol/dist/messages');
 
-const client = new Client({
+const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'postgres',
@@ -9,14 +9,12 @@ const client = new Client({
   port: 5432
 });
 
-client.connect();
-
-client.query('SELECT * FROM QUIZ', function(error, response) {
+pool.query('SELECT * FROM QUIZ', function(error, result) {
   if (error) {
     console.log(error.message);
   } else {
-    var rows = response.rows;
-    var countRows = response.rowCount;
+    var rows = result.rows;
+    var countRows = result.rowCount;
 
     for (var i = 0; i < countRows; ++i) {
       var question = rows[i];
@@ -37,5 +35,5 @@ client.query('SELECT * FROM QUIZ', function(error, response) {
       }
     }
   }
-  client.end();
+  pool.end();
 });
