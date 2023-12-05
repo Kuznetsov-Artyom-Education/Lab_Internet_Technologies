@@ -2,7 +2,9 @@ const db = require('./DB');
 const express = require('express');
 const app = express();
 
+app.use(express.static("public"));
 app.set('view engine', 'ejs');
+
 
 app.use('/', function(request, response) {
 

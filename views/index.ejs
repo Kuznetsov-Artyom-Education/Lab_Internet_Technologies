@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="author" content="Kuznetsov-Artyom">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../style/style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Тест</title>
 </head>
 
@@ -31,7 +31,7 @@
                     <% var descriptionAns = answer.answer; %>
                     <% var correctAns = answer.correct; %>
 
-                    <label><input type="radio" name="q1" value="a"><%=descriptionAns %></label><br>
+                    <label><input type="radio" name="q<%=(i + 1)%>" value="a<%=(j + 1)%>"><%=descriptionAns %></label><br>
 
                 <% } %>
             <% } %>
