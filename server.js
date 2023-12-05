@@ -1,6 +1,7 @@
 const db = require('./DB');
 const express = require('express');
 const app = express();
+const port = 3000;
 
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
@@ -20,7 +21,9 @@ app.use('/', function(request, response) {
     })
 });
 
-app.listen(3000);
+app.listen(port, function() {
+    console.log("'Server is running on port " + port);
+});
 
 // db.query('SELECT * FROM QUIZ', function(error, result) {
 //     if (error) {
