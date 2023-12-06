@@ -14,7 +14,7 @@
         <h1>Тест</h1>
     </header>
     <main>
-        <form>
+        <form action="/submit-test" method="POST">
             <% for (var i = 0; i < countRows; ++i){ %>
                 <h1>Вопрос <%=(i + 1) %></h1>
                 <% var question = rows[i]; %>
@@ -35,37 +35,6 @@
 
                 <% } %>
             <% } %>
-
-
-        <!-- 
-        var rows = result.rows;
-        var countRows = result.rowCount;
-
-        for (var i = 0; i < countRows; ++i) {
-            var question = rows[i];
-
-            var descriptionQuestion = question.question;
-
-            var answers = question.answers;
-            var countAnswers = answers.length;
-
-            console.log(descriptionQuestion, countAnswers);
-
-            for (var j = 0; j < countAnswers; ++j) {
-            var answer = answers[j];
-            var descriptionAns = answer.answer;
-            var correctAns = answer.correct;
-
-            console.log(descriptionAns, correctAns);
-            }
-        } -->
-
-
-            <!-- <h2>Вопрос 1</h2>
-            <p>Какой язык программирования используется для создания веб-страниц?</p>
-            <label><input type="radio" name="q1" value="a">Java</label><br>
-            <label><input type="radio" name="q1" value="b">Python</label><br>
-            <label><input type="radio" name="q1" value="c">HTML</label><br> -->
 
             <input type="submit" value="Завершить ответ">
         </form>

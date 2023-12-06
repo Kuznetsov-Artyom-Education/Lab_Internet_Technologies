@@ -1,17 +1,25 @@
-const db = require('./DB');
+const db = require("./DB");
 const express = require('express');
 const app = express();
 const port = 3000;
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
 
+app.post('/submit-test', function(request, response) {
+    const selectedAnswers= request.body;
+    console.log(selectedAnswers);
 
-app.use('/', function(request, response) {
+    response.send('Данные успешно получены');
+});
+
+app.get('/test', function(request, response) {
 
     db.query("SELECT * FROM QUIZ", function(error, result){
         if (error){
             console.log(error.message);
+            response.send(error.message);
         }
 
        response.render("index", {
@@ -22,5 +30,5 @@ app.use('/', function(request, response) {
 });
 
 app.listen(port, function() {
-    console.log("'Server is running on port " + port);
+    console.log("Server is running on port " + port);
 });
