@@ -42,7 +42,7 @@ app.post('/submit-test', async function(request, response) {
             response.send(countSuccess + '/' + countRows);
         }
         else {
-            response.send('Количество ответов не совпадает с количеством вопросов. Вернитесь и ответье на оставшиеся вопросы');
+            response.render("error_count");
         }
     })
 });
