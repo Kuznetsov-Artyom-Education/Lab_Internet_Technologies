@@ -98,8 +98,12 @@ app.post('/last-result', async function(request, response) {
             response.send(error.message);
         }
 
-       console.log(result.rows);
-       response.send("SUCCESS");
+       //console.log(result.rows);
+
+       response.render("last_result", {
+        tests: result.rows,
+        countTests: result.rowCount
+       })
     })
 });
 
