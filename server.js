@@ -19,8 +19,9 @@ app.post('/submit-test', async function(request, response) {
     }
 
     console.log(arrayAnswersTest);
+    const selectQueryQUIZ = "SELECT * FROM QUIZ";
 
-    await db.query("SELECT * FROM QUIZ", function (error, result) {
+    await db.query(selectQueryQUIZ, function (error, result) {
         if (error) {
             console.log(error.message);
             response.send(error.message);
@@ -46,6 +47,15 @@ app.post('/submit-test', async function(request, response) {
             console.log(countRows, countSuccess);
             console.log(arrayAnswersTest, arrayAnswersSuccess);
 
+            const insertQueryLASTRESULT = "INSERT INTO LASTRESULT (userAns, successAns) VALUES ($1, $2)";
+
+            db.query(insertQueryLASTRESULT, [arrayAnswersTest, arrayAnswersSuccess], function(err, res) {
+                if (error) {
+                    console.error(error.message);
+                    response.send(error.message);
+                }
+            });
+
             response.render("result_test", {
                 countQuestion: countRows,
                 successQuestion: countSuccess,
@@ -61,7 +71,9 @@ app.post('/submit-test', async function(request, response) {
 
 app.get('/test', async function(request, response) {
 
-    db.query("SELECT * FROM QUIZ", function(error, result){
+    const selectQueryQUIZ = "SELECT * FROM QUIZ";
+
+    db.query(selectQueryQUIZ, function(error, result){
         if (error){
             console.log(error.message);
             response.send(error.message);
@@ -75,6 +87,23 @@ app.get('/test', async function(request, response) {
        })
     })
 });
+
+app.post('/last-result', async function(request, response) {
+
+    const selectQueryLASTRESULT = "SELECT * FROM LASTRESULT";
+
+    db.query(selectQueryLASTRESULT, function(error, result){
+        if (error){
+            console.log(error.message);
+            response.send(error.message);
+        }
+
+       console.log(result.rows);
+       response.send("SUCCESS");
+    })
+});
+
+
 
 app.listen(port, function() {
     console.log("Сервер запущен по порту " + port);

@@ -14,6 +14,7 @@
         <h1>Тест</h1>
     </header>
     <main>
+
         <form action="/submit-test" method="POST">
             <% for (var i = 0; i < countRows; ++i){ %>
                 <h1>Вопрос <%=(i + 1) %></h1>
@@ -38,6 +39,12 @@
 
             <input type="submit" value="Завершить ответ">
         </form>
+
+        <form action="/last-result" method="POST">
+            <input type="submit" value="История прохождений">
+        </form>
+
+
     </main>
 </body>
 
