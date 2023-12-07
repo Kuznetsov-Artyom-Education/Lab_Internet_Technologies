@@ -12,14 +12,16 @@ app.post('/submit-test', async function(request, response) {
 
     var countRequestAnswers =  Object.keys(selectedAnswers).length;
     var arrayAnswersTest = [];
+    var arrayAnswersSuccess = [];
     
     for (var i in selectedAnswers){
         arrayAnswersTest.push(Number(selectedAnswers[i]));
     }
 
     console.log(arrayAnswersTest);
+    const selectQueryQUIZ = "SELECT * FROM QUIZ";
 
-    await db.query("SELECT * FROM QUIZ", function (error, result) {
+    await db.query(selectQueryQUIZ, function (error, result) {
         if (error) {
             console.log(error.message);
             response.send(error.message);
@@ -29,20 +31,36 @@ app.post('/submit-test', async function(request, response) {
         var countRows = result.rowCount;
         var countSuccess = 0;
 
-        if (countRequestAnswers == countRows){
-
+        if (countRequestAnswers == countRows) {
             for (var i = 0; i < countRows; ++i) {
                 var question = rows[i];
                 var answers = question.answers;
-                var correct = answers[arrayAnswersTest[i]].correct;
 
-                if (correct) ++countSuccess;
+                for (var j in answers) {                    
+                    if (answers[j].correct) {
+                        if (j == arrayAnswersTest[i]) ++countSuccess;
+                        arrayAnswersSuccess.push(Number(j));
+                    }
+                }
             }
 
-            //response.send(countSuccess + '/' + countRows);
+            console.log(countRows, countSuccess);
+            console.log(arrayAnswersTest, arrayAnswersSuccess);
+
+            const insertQueryLASTRESULT = "INSERT INTO LASTRESULT (userAns, successAns) VALUES ($1, $2)";
+
+            db.query(insertQueryLASTRESULT, [arrayAnswersTest, arrayAnswersSuccess], function(err, res) {
+                if (error) {
+                    console.error(error.message);
+                    response.send(error.message);
+                }
+            });
+
             response.render("result_test", {
-                countTests: countRows,
-                successTests: countSuccess
+                countQuestion: countRows,
+                successQuestion: countSuccess,
+                userAnswers: arrayAnswersTest,
+                successAnswers: arrayAnswersSuccess
             });
         }
         else {
@@ -53,7 +71,9 @@ app.post('/submit-test', async function(request, response) {
 
 app.get('/test', async function(request, response) {
 
-    db.query("SELECT * FROM QUIZ", function(error, result){
+    const selectQueryQUIZ = "SELECT * FROM QUIZ";
+
+    db.query(selectQueryQUIZ, function(error, result){
         if (error){
             console.log(error.message);
             response.send(error.message);
@@ -67,6 +87,27 @@ app.get('/test', async function(request, response) {
        })
     })
 });
+
+app.post('/last-result', async function(request, response) {
+
+    const selectQueryLASTRESULT = "SELECT * FROM LASTRESULT";
+
+    db.query(selectQueryLASTRESULT, function(error, result){
+        if (error){
+            console.log(error.message);
+            response.send(error.message);
+        }
+
+       //console.log(result.rows);
+
+       response.render("last_result", {
+        tests: result.rows,
+        countTests: result.rowCount
+       })
+    })
+});
+
+
 
 app.listen(port, function() {
     console.log("Сервер запущен по порту " + port);

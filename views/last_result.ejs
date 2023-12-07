@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Kuznetsov-Artyom">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style_result.css">
+    <title>История прохождений</title>
+</head>
+
+<body>
+    <header>
+        <h1>История прохождений</h1>
+    </header>
+    <main>
+        <form action="/test" method="GET">
+            <% for(var i = 0; i < countTests; ++i) { %>
+                <% var userAns = tests[i].userans; %>
+                <% var successAns = tests[i].successans; %>
+                <% var countAns = userAns.length; %>
+                <% console.log(userAns, successAns, countAns); %>
+
+                
+                <h2>Попытка <%=(i + 1)%></h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Ваш ответ </th>
+                            <th> Правильный ответ </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% for (var j = 0; j < countAns; ++j) { %>
+                            <tr>
+                                <td><%=(userAns[j] + 1) %></td>
+                                <td><%=(successAns[j] + 1) %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+
+
+
+            <% } %>
+           
+            
+            <input type="submit" value="Пройти тест">
+        </form>
+    </main>
+</body>
+
+</html>
