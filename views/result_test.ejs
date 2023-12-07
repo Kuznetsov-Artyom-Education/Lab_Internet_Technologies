@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Kuznetsov-Artyom">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style_result.css">
+    <title>Результаты теста</title>
+</head>
+
+<body>
+    <header>
+        <h1>Результаты теста</h1>
+    </header>
+    <main>
+        <form action="/test" method="GET">
+            <h2>Ваш результат: <%=successTests%>/<%=countTests %></h2>
+            
+            <input type="submit" value="Перепройти тест">
+        </form>
+    </main>
+</body>
+
+</html>

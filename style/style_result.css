@@ -29,14 +29,11 @@ form {
 
 h2 {
     margin-top: 20px;
+    text-align: center;
 }
 
 label {
     margin-bottom: 10px;
-}
-
-input[type="radio"] {
-    cursor: pointer;
 }
 
 input[type="submit"] {
@@ -48,6 +45,7 @@ input[type="submit"] {
     border-radius: 5px;
     cursor: pointer;
 }
+
 
 input[type="submit"]:hover {
     background-color: #555555;

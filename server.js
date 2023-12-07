@@ -39,10 +39,14 @@ app.post('/submit-test', async function(request, response) {
                 if (correct) ++countSuccess;
             }
 
-            response.send(countSuccess + '/' + countRows);
+            //response.send(countSuccess + '/' + countRows);
+            response.render("result_test", {
+                countTests: countRows,
+                successTests: countSuccess
+            });
         }
         else {
-            response.send('Количество ответов не совпадает с количеством вопросов. Вернитесь и ответье на оставшиеся вопросы');
+            response.render("error_count");
         }
     })
 });
