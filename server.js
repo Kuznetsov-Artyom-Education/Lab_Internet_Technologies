@@ -39,7 +39,11 @@ app.post('/submit-test', async function(request, response) {
                 if (correct) ++countSuccess;
             }
 
-            response.send(countSuccess + '/' + countRows);
+            //response.send(countSuccess + '/' + countRows);
+            response.render("result_test", {
+                countTests: countRows,
+                successTests: countSuccess
+            });
         }
         else {
             response.render("error_count");

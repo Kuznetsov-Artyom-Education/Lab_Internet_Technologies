@@ -12,7 +12,6 @@ header {
     text-align: center;
 }
 
-
 main {
     margin: 3%;
     margin-left: 15%;
@@ -23,17 +22,14 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
-
 form {
     display: flex;
     flex-direction: column;
 }
 
-
 h2 {
     margin-top: 20px;
 }
-
 
 label {
     margin-bottom: 10px;
@@ -52,7 +48,6 @@ input[type="submit"] {
     border-radius: 5px;
     cursor: pointer;
 }
-
 
 input[type="submit"]:hover {
     background-color: #555555;
