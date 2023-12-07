@@ -12,6 +12,7 @@ app.post('/submit-test', async function(request, response) {
 
     var countRequestAnswers =  Object.keys(selectedAnswers).length;
     var arrayAnswersTest = [];
+    var arrayAnswersSuccess = [];
     
     for (var i in selectedAnswers){
         arrayAnswersTest.push(Number(selectedAnswers[i]));
@@ -29,20 +30,27 @@ app.post('/submit-test', async function(request, response) {
         var countRows = result.rowCount;
         var countSuccess = 0;
 
-        if (countRequestAnswers == countRows){
-
+        if (countRequestAnswers == countRows) {
             for (var i = 0; i < countRows; ++i) {
                 var question = rows[i];
                 var answers = question.answers;
-                var correct = answers[arrayAnswersTest[i]].correct;
 
-                if (correct) ++countSuccess;
+                for (var j in answers) {                    
+                    if (answers[j].correct) {
+                        if (j == arrayAnswersTest[i]) ++countSuccess;
+                        arrayAnswersSuccess.push(Number(j));
+                    }
+                }
             }
 
-            //response.send(countSuccess + '/' + countRows);
+            console.log(countRows, countSuccess);
+            console.log(arrayAnswersTest, arrayAnswersSuccess);
+
             response.render("result_test", {
-                countTests: countRows,
-                successTests: countSuccess
+                countQuestion: countRows,
+                successQuestion: countSuccess,
+                userAnswers: arrayAnswersTest,
+                successAnswers: arrayAnswersSuccess
             });
         }
         else {

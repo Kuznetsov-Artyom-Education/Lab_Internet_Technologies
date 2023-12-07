@@ -15,7 +15,25 @@
     </header>
     <main>
         <form action="/test" method="GET">
-            <h2>Ваш результат: <%=successTests%>/<%=countTests %></h2>
+            <h2>Ваш результат: <%=successQuestion%>/<%=countQuestion %></h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th> Ваш ответ </th>
+                        <th> Правильный ответ </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% for (var i = 0; i < countQuestion; ++i) { %>
+                        <tr>
+                            <td><%=(userAnswers[i] + 1) %></td>
+                            <td><%=(successAnswers[i] + 1) %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
             
             <input type="submit" value="Перепройти тест">
         </form>
