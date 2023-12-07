@@ -31,7 +31,7 @@
                     <% var descriptionAns = answer.answer; %>
                     <% var correctAns = answer.correct; %>
 
-                    <label><input type="radio" name="q<%=(i + 1)%>" value="a<%=(j + 1)%>"><%=descriptionAns %></label><br>
+                    <label><input type="radio" name="q<%=(i + 1)%>" value="<%=j%>"><%=descriptionAns %></label><br>
 
                 <% } %>
             <% } %>

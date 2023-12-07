@@ -7,20 +7,55 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
 
-app.post('/submit-test', function(request, response) {
+app.post('/submit-test', async function(request, response) {
     const selectedAnswers= request.body;
-    console.log(selectedAnswers);
 
-    response.send('Данные успешно получены');
+    var countRequestAnswers =  Object.keys(selectedAnswers).length;
+    var arrayAnswersTest = [];
+    
+    for (var i in selectedAnswers){
+        arrayAnswersTest.push(Number(selectedAnswers[i]));
+    }
+
+    console.log(arrayAnswersTest);
+
+    await db.query("SELECT * FROM QUIZ", function (error, result) {
+        if (error) {
+            console.log(error.message);
+            response.send(error.message);
+        }
+
+        var rows = result.rows;
+        var countRows = result.rowCount;
+        var countSuccess = 0;
+
+        if (countRequestAnswers == countRows){
+
+            for (var i = 0; i < countRows; ++i) {
+                var question = rows[i];
+                var answers = question.answers;
+                var correct = answers[arrayAnswersTest[i]].correct;
+
+                if (correct) ++countSuccess;
+            }
+
+            response.send(countSuccess + '/' + countRows);
+        }
+        else {
+            response.send('Количество ответов не совпадает с количеством вопросов. Вернитесь и ответье на оставшиеся вопросы');
+        }
+    })
 });
 
-app.get('/test', function(request, response) {
+app.get('/test', async function(request, response) {
 
     db.query("SELECT * FROM QUIZ", function(error, result){
         if (error){
             console.log(error.message);
             response.send(error.message);
         }
+
+        test = result;
 
        response.render("index", {
         rows: result.rows,
@@ -30,5 +65,5 @@ app.get('/test', function(request, response) {
 });
 
 app.listen(port, function() {
-    console.log("Server is running on port " + port);
+    console.log("Сервер запущен по порту " + port);
 });
